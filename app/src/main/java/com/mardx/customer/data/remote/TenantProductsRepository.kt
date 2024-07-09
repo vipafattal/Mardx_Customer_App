@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.map
 
 class TenantProductsRepository(private val service: TenantProductsService) {
 
-    suspend fun getProducts(tenantId: String): Flow<ProcessState<List<Product>>> {
+     fun getProducts(tenantId: String): Flow<ProcessState<List<Product>>> {
 
         return newRequest { service.getProductsByTenantId(tenantId) }.map {
             if (it is ProcessState.Success)
-                ProcessState.Success(it.data!!.productDataList.products)
+                ProcessState.Success(it.data!!.products)
             else
                 it.transformProcessType()
 

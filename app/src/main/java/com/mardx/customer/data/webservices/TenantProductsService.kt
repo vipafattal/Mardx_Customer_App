@@ -1,6 +1,6 @@
 package com.mardx.customer.data.webservices
 
-import com.mardx.customer.data.Endpoints
+import com.mardx.customer.data.webservices.common.Endpoints
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

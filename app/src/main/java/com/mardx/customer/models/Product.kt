@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Product(
+    val id:String,
     val title:String,
     @SerialName("cover_image_id")
     val coverImageId:String?,
@@ -12,6 +13,7 @@ data class Product(
     @SerialName("short_description")
     val shortDescription:String?,
     val code:String?,
+    val price:Double,
     @SerialName("preorder")
     val isPreOrder:Boolean,
 )

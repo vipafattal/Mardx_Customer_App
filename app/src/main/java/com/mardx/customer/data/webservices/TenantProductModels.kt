@@ -8,12 +8,6 @@ object TenantProductModels {
 
     @Serializable
     data class ProductsData(
-        @SerialName("data")
-        val productDataList: ProductsDataList,
-    )
-
-    @Serializable
-    data class ProductsDataList(
         val products: List<Product>,
     )
 

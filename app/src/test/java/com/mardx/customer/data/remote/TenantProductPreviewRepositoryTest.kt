@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-class TenantProductsRepositoryTest {
+class TenantProductPreviewRepositoryTest {
 
 
     @get:Rule

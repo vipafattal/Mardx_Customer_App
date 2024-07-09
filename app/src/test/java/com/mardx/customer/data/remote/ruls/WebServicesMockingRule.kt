@@ -1,7 +1,7 @@
 package com.mardx.customer.data.remote.ruls
 
 import com.mardx.customer.data.webservices.TenantProductsService
-import com.mardx.customer.framework.Dependencies
+import com.mardx.customer.di.Dependencies
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.TestWatcher
