@@ -1,5 +1,6 @@
 package com.mardx.customer.models
 
+import com.mardx.customer.data.webservices.common.STORAGE_FILES_URL
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,7 +17,9 @@ data class Product(
     val price:Double,
     @SerialName("preorder")
     val isPreOrder:Boolean,
-)
+){
+    val coverImageUrl:String = STORAGE_FILES_URL + coverImageId
+}
 
 /*
 

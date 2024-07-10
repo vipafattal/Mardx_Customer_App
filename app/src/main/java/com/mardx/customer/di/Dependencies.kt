@@ -1,6 +1,7 @@
 package com.mardx.customer.di
 
 import com.mardx.customer.data.remote.TenantProductsRepository
+import com.mardx.customer.data.remote.TenantProductsRepositoryImpl
 import com.mardx.customer.data.webservices.common.BASE_URL
 import com.mardx.customer.data.webservices.TenantProductsService
 import kotlinx.serialization.json.Json
@@ -19,8 +20,10 @@ object Dependencies {
     }
 
     object Data {
-        val tenantProductsRepository: TenantProductsRepository by lazy {
-            TenantProductsRepository(WebServices.tenantProductsService)
+
+        //TODO should be replaced for testing with FakeRepository
+        val tenantProductsRepository: TenantProductsRepositoryImpl by lazy {
+            TenantProductsRepositoryImpl(WebServices.tenantProductsService)
         }
     }
 

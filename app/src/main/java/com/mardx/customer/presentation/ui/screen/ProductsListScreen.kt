@@ -2,12 +2,15 @@ package com.mardx.customer.presentation.ui.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -16,27 +19,55 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mardx.customer.models.ProcessState
 import com.mardx.customer.models.Product
 import com.mardx.customer.presentation.ui.components.product.BuildProductsListGrid
-import com.mardx.customer.presentation.ui.preview.ProductPreviewLists
+import com.mardx.customer.presentation.ui.preview.TenantProductsViewModelPreview
 import com.mardx.customer.presentation.ui.theme.MardxCustomerAppTheme
 import com.mardx.customer.presentation.viewmodel.TenantProductsViewModel
 
+
 @Composable
-fun BuildProductListScreen(productsViewModel: TenantProductsViewModel = viewModel(), innerPadding: PaddingValues) {
-    Box(modifier = Modifier.padding(innerPadding)) {
-        val productsState by productsViewModel.products.collectAsStateWithLifecycle()
-        when(val currentState = productsState){
-            is ProcessState.Loading -> CircularProgressIndicator()
-            is ProcessState.Failed -> Text(text=currentState.friendlyMsg)
+fun BuildProductListScreen(
+    productsViewModel: TenantProductsViewModel = viewModel(),
+    innerPadding: PaddingValues = PaddingValues(0.dp)
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding),
+        contentAlignment = Alignment.Center
+    ) {
+        val productsState by productsViewModel.productsState.collectAsStateWithLifecycle()
+        when (val currentState = productsState) {
+            is ProcessState.Loading -> CircularProgressIndicator(
+                Modifier.testTag(
+                    ProductsListScreenTags.PRODUCTS_LOADING
+                )
+            )
+
+            is ProcessState.Failed -> Text(
+                modifier = Modifier.testTag(ProductsListScreenTags.PRODUCTS_ERROR),
+                text = currentState.friendlyMsg
+            )
+
             is ProcessState.Success -> BuildProductsListGrid(currentState.data!!)
         }
     }
 }
+
+object ProductsListScreenTags {
+    private const val TAG = "products_list_screen"
+
+    const val PRODUCTS_LOADING = "${TAG}_loading"
+    const val PRODUCTS_ERROR = "${TAG}_error"
+}
+
 @Preview(showBackground = true)
 @Composable
-private fun ProductListPreview(@PreviewParameter(ProductPreviewLists::class) productList: List<Product>) {
+private fun ProductListPreview(@PreviewParameter(TenantProductsViewModelPreview::class) productListState: ProcessState<List<Product>>) {
     MardxCustomerAppTheme {
         BuildProductListScreen(
-            innerPadding = PaddingValues(0.dp)
+            productsViewModel = TenantProductsViewModel(
+                productListState
+            )
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.mardx.customer.presentation.ui.components.product
 
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -21,13 +22,21 @@ fun BuildProductsListGrid(
     LazyVerticalGrid(
         columns = GridCells.Adaptive(150.dp),
         modifier = Modifier
-            .testTag("product_list_grid")
+            .testTag(ProductsListGridTags.PRODUCTS_LIST_GRID)
+            .fillMaxHeight()
             .padding(horizontal = 8.dp)
     ) {
         items(productList) { product ->
             ProductItem(product = product)
         }
     }
+}
+
+
+object ProductsListGridTags {
+
+    const val PRODUCTS_LIST_GRID = "product_list_grid"
+
 }
 
 @Preview(showBackground = true)

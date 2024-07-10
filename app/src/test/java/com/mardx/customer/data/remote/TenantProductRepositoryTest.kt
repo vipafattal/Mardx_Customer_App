@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-class TenantProductPreviewRepositoryTest {
+class TenantProductRepositoryTest {
 
 
     @get:Rule
@@ -27,7 +27,7 @@ class TenantProductPreviewRepositoryTest {
 
     @Before
     fun setup() {
-        sut = TenantProductsRepository(apiMockingRule.api)
+        sut = TenantProductsRepositoryImpl(apiMockingRule.api)
     }
 
 

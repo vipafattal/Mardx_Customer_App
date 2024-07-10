@@ -42,7 +42,7 @@ fun ProductItem(product: Product) {
             .padding(8.dp)
             .fillMaxWidth()
             .height(280.dp)
-            .testTag("item_${product.id}")
+            .testTag(ProductItemTags.createRootTag(product.id))
             .clickable {
                 // Handle card tap here (e.g., navigate to details screen)
             },
@@ -53,7 +53,7 @@ fun ProductItem(product: Product) {
     ) {
         Column {
             GlideImage(
-                model = product.coverImageId,
+                model = product.coverImageUrl,
                 contentDescription = product.title,
                 modifier = Modifier
                     .padding(8.dp)
@@ -61,7 +61,12 @@ fun ProductItem(product: Product) {
                     .fillMaxSize(),
             )
             Column(Modifier.padding(all = 9.dp)) {
-                Text(text = product.title, maxLines = 2, minLines = 2, overflow = TextOverflow.Ellipsis)
+                Text(
+                    text = product.title,
+                    maxLines = 2,
+                    minLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
                 Spacer(modifier = Modifier.height(8.dp)) // Add 8dp of space
 
                 Row(
@@ -88,6 +93,13 @@ fun ProductItem(product: Product) {
         }
     }
 }
+
+object ProductItemTags {
+
+    fun createRootTag(productId: String) = "item_$productId"
+
+}
+
 
 @Preview(showBackground = true)
 @Composable

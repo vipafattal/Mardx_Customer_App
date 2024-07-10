@@ -1,6 +1,8 @@
 package com.mardx.customer.models
 
-import androidx.annotation.StringRes
+import com.mardx.customer.models.ProcessState.Failed
+import com.mardx.customer.models.ProcessState.Loading
+import com.mardx.customer.models.ProcessState.Success
 
 /**
  * A wrapper class for processes that can [Loading], [Success], or [Failed].
@@ -26,7 +28,7 @@ sealed class ProcessState<T> {
     /**
      * When the process [Failed] for a [error] you can use [friendlyMsg] to show the user a msg why it's failed.
      */
-    data class Failed<T>(val error: String?, val friendlyMsg: String) : ProcessState<T>()
+    data class Failed<T>(val error: String? = null, val friendlyMsg: String) : ProcessState<T>()
 
     /**
      * Used by library to transform the current process [T] type to another.
