@@ -1,7 +1,7 @@
 package com.mardx.customer.data.remote.ruls
 
 import com.mardx.customer.data.webservices.TenantProductsService
-import com.mardx.customer.di.Dependencies
+import com.mardx.customer.di.factories.WebServicesFactory
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.TestWatcher
@@ -17,7 +17,7 @@ class WebServicesMockingRule(val server: MockWebServer = MockWebServer()) : Test
 
 
     val api: TenantProductsService =
-        Dependencies.buildRetrofitService(server.url("/").toUri().toString(), TenantProductsService::class.java, client)
+        WebServicesFactory.buildRetrofitService(server.url("/").toUri().toString(), TenantProductsService::class.java, client)
 
     override fun finished(description: Description?) {
         super.finished(description)

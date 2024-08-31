@@ -6,7 +6,9 @@ import com.mardx.customer.models.ProcessState
 import com.mardx.customer.models.Product
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.koin.core.annotation.Single
 
+@Single
 class TenantProductsRepositoryImpl(private val service: TenantProductsService) :
     TenantProductsRepository {
 

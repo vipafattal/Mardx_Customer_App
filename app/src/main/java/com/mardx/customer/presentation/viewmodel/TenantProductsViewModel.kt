@@ -3,21 +3,22 @@ package com.mardx.customer.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mardx.customer.data.remote.TenantProductsRepository
-import com.mardx.customer.di.Dependencies
 import com.mardx.customer.models.ProcessState
 import com.mardx.customer.models.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class TenantProductsViewModel(
     private val productsDefaultState: ProcessState<List<Product>>? = null,
-    private val repository: TenantProductsRepository = Dependencies.Data.tenantProductsRepository, //TODO use Injection
+    private val repository: TenantProductsRepository,
 ) : ViewModel() {
 
 
-    val productsState: StateFlow<ProcessState<List<Product>>> = createProductsState()
+    var productsState: StateFlow<ProcessState<List<Product>>> = createProductsState()
 
     private fun createProductsState(): StateFlow<ProcessState<List<Product>>> {
         return if (productsDefaultState != null) MutableStateFlow(value = productsDefaultState)

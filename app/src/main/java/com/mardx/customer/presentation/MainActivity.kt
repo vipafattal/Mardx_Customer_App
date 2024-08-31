@@ -1,4 +1,4 @@
-package com.mardx.customer
+package com.mardx.customer.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

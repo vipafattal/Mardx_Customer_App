@@ -1,32 +1,23 @@
-package com.mardx.customer.di
+package com.mardx.customer.di.factories
 
-import com.mardx.customer.data.remote.TenantProductsRepository
-import com.mardx.customer.data.remote.TenantProductsRepositoryImpl
-import com.mardx.customer.data.webservices.common.BASE_URL
 import com.mardx.customer.data.webservices.TenantProductsService
+import com.mardx.customer.data.webservices.common.BASE_URL
+import com.mardx.customer.di.factories.WebServicesFactory.buildRetrofitService
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.core.annotation.Single
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
 
-object Dependencies {
-    object WebServices {
-        val tenantProductsService: TenantProductsService by lazy {
-            buildRetrofitService(BASE_URL, TenantProductsService::class.java)
-        }
-    }
+@Single
+fun provideProductsService(): TenantProductsService {
+    return buildRetrofitService(BASE_URL, TenantProductsService::class.java)
+}
 
-    object Data {
-
-        //TODO should be replaced for testing with FakeRepository
-        val tenantProductsRepository: TenantProductsRepositoryImpl by lazy {
-            TenantProductsRepositoryImpl(WebServices.tenantProductsService)
-        }
-    }
-
+object WebServicesFactory {
     fun <T> buildRetrofitService(
         baseUrl: String,
         clazz: Class<T>,
@@ -37,7 +28,7 @@ object Dependencies {
 
         val client = (clientConfigs ?: OkHttpClient.Builder())
             .addInterceptor(logger)
-            .callTimeout(20000,TimeUnit.MILLISECONDS)
+            .callTimeout(20000, TimeUnit.MILLISECONDS)
 
             .retryOnConnectionFailure(true)
             .build()

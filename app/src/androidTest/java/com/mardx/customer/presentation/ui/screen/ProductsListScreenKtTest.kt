@@ -5,6 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
+import com.mardx.customer.data.remote.TenantProductsRepositoryEmpty
 import com.mardx.customer.presentation.ui.components.product.BuildProductsListGrid
 import com.mardx.customer.presentation.ui.components.product.ProductItemTags
 import com.mardx.customer.presentation.ui.components.product.ProductsListGridTags
@@ -46,7 +47,7 @@ class ProductsListScreenKtTest {
 
         composeTestRule.setContent {
             BuildProductListScreen(
-                productsViewModel = TenantProductsViewModel(viewModelDataPreview.failedState)
+                productsViewModel = TenantProductsViewModel(viewModelDataPreview.failedState, repository = TenantProductsRepositoryEmpty())
             )
         }
 
@@ -58,7 +59,7 @@ class ProductsListScreenKtTest {
 
         composeTestRule.setContent {
             BuildProductListScreen(
-                productsViewModel = TenantProductsViewModel(viewModelDataPreview.loadingState)
+                productsViewModel = TenantProductsViewModel(viewModelDataPreview.loadingState, repository = TenantProductsRepositoryEmpty())
             )
         }
 
@@ -71,7 +72,7 @@ class ProductsListScreenKtTest {
 
         composeTestRule.setContent {
             BuildProductListScreen(
-                productsViewModel = TenantProductsViewModel(viewModelDataPreview.successState)
+                productsViewModel = TenantProductsViewModel(viewModelDataPreview.successState, repository = TenantProductsRepositoryEmpty())
             )
         }
 

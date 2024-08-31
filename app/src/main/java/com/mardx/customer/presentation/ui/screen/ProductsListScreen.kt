@@ -12,28 +12,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mardx.customer.data.remote.TenantProductsRepositoryEmpty
 import com.mardx.customer.models.ProcessState
 import com.mardx.customer.models.Product
 import com.mardx.customer.presentation.ui.components.product.BuildProductsListGrid
 import com.mardx.customer.presentation.ui.preview.TenantProductsViewModelPreview
 import com.mardx.customer.presentation.ui.theme.MardxCustomerAppTheme
 import com.mardx.customer.presentation.viewmodel.TenantProductsViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun BuildProductListScreen(
-    productsViewModel: TenantProductsViewModel = viewModel(),
+    productsViewModel: TenantProductsViewModel = koinViewModel(),
     innerPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(innerPadding),
-        contentAlignment = Alignment.Center
+            .padding(innerPadding), contentAlignment = Alignment.Center
     ) {
         val productsState by productsViewModel.productsState.collectAsStateWithLifecycle()
         when (val currentState = productsState) {
@@ -60,13 +62,19 @@ object ProductsListScreenTags {
     const val PRODUCTS_ERROR = "${TAG}_error"
 }
 
+@PreviewFontScale
+//@PreviewScreenSizes
+//@PreviewLightDark
+//@PreviewDynamicColors
 @Preview(showBackground = true)
+@PreviewDynamicColors
 @Composable
 private fun ProductListPreview(@PreviewParameter(TenantProductsViewModelPreview::class) productListState: ProcessState<List<Product>>) {
     MardxCustomerAppTheme {
         BuildProductListScreen(
             productsViewModel = TenantProductsViewModel(
-                productListState
+                productsDefaultState = productListState,
+                repository = TenantProductsRepositoryEmpty(),
             )
         )
     }
